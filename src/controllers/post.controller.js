@@ -1,7 +1,6 @@
 const ApiError = require('../utils/ApiError');
 const httpStatus = require('http-status');
 const catchAsync = require('../utils/catchAsync');
-const { Post } = require('../models');
 
 const createPost=catchAsync(async(req, res)=>{
 

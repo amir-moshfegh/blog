@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const User = require('./user.model');
 const { status } = require('../config/enums');
+const { toJSON, paginate } = require('./plugins');
 
 const postSchema = mongoose.Schema({
     title: {
@@ -26,6 +27,9 @@ const postSchema = mongoose.Schema({
         default: status.DISABLE,
     },
 });
+
+postSchema.plugin(toJSON);
+postSchema.plugin(paginate);
 
 // TODO:: create slug and save slug automaticly
 
