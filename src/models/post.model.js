@@ -3,30 +3,36 @@ const User = require('./user.model');
 const { status } = require('../config/enums');
 const { toJSON, paginate } = require('./plugins');
 
-const postSchema = mongoose.Schema({
-    title: {
-        type: String,
-        require: true,
-        trim: true,
+const postSchema = mongoose.Schema(
+    {
+        title: {
+            type: String,
+            require: true,
+            trim: true,
+        },
+        content: {
+            type: String,
+            trim: true,
+        },
+        tags: [{
+            type: String,
+            trim: true,
+        }],
+        user: {
+            type: mongoose.SchemaTypes.ObjectId,
+            ref: User,
+            require: true,
+        },
+        status: {
+            type: String,
+            default: status.DISABLE,
+            private: true,
+        },
     },
-    content: {
-        type: String,
-        trim: true,
-    },
-    tags: [{
-        type: String,
-        trim: true,
-    }],
-    user: {
-        type: mongoose.SchemaTypes.ObjectId,
-        ref: User,
-        require: true,
-    },
-    status: {
-        type: String,
-        default: status.DISABLE,
-    },
-});
+    {
+        timestamps: true,
+    }
+);
 
 postSchema.plugin(toJSON);
 postSchema.plugin(paginate);

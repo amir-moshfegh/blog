@@ -6,7 +6,7 @@ const createPost = {
         title: Joi.string().required(),
         content: Joi.string(),
         tags: Joi.array(),
-        user: Joi.required().custom(objectId),
+        user: Joi.string().custom(objectId),
     }),
 };
 
@@ -36,8 +36,6 @@ const getPost = {
 
 const getPosts = {
     query: Joi.object().keys({
-        name: Joi.string(),
-        role: Joi.string(),
         sortBy: Joi.string(),
         limit: Joi.number().integer(),
         page: Joi.number().integer(),

@@ -3,6 +3,7 @@ const httpStatus = require('http-status');
 const catchAsync = require('../utils/catchAsync');
 const pick = require('../utils/pick');
 const { postService } = require('../services');
+const { status } = require('../config/enums');
 
 const createPost = catchAsync(async (req, res) => {
     const post = await postService.createPost({
@@ -13,17 +14,21 @@ const createPost = catchAsync(async (req, res) => {
 });
 
 const updatePost = catchAsync(async (req, res) => {
-    const post =await postService.updatePostById(req.params.postId, req.body);
+    const post = await postService.updatePostById(req.params.postId, req.body);
     res.send(post);
 });
 
 const deletePost = catchAsync(async (req, res) => {
-    await postService.deletePostById(req.params.id);
+    await postService.deletePostById(req.params.postId);
     res.status(httpStatus.NO_CONTENT).send();
 });
 
 const getPost = catchAsync(async (req, res) => {
-    const post =await postService.getPostById(req.params.id);
+    const post = {
+        "post": await postService.getPostById(req.params.postId),
+        "user": req.user,
+    };
+
     if (!post) {
         throw new ApiError(httpStatus.NOT_FOUND, 'post not found');
     }
@@ -32,7 +37,7 @@ const getPost = catchAsync(async (req, res) => {
 });
 
 const getPosts = catchAsync(async (req, res) => {
-    const filter = pick(req.query, ['post', 'status']);
+    const filter = { 'status': status.ENABLE }
     const options = pick(req.query, ['sortBy', 'limit', 'page']);
     const result = await postService.queryPosts(filter, options);
     res.send(result);

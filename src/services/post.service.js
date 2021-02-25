@@ -1,14 +1,18 @@
 const ApiError = require('../utils/ApiError');
 const httpStatus = require('http-status');
 const { Post } = require('../models');
+const { status } = require('../config/enums');
 
 /**
- * get post by id
+ * get post by id and status is enable
  * @param {ObjectId} id 
  * @returns {Promise<Post>}
  */
 const getPostById = async (id) => {
-    return Post.findById(id);
+    return Post.findOne({
+        _id: id,
+        status: status.ENABLE,
+    });
 }
 
 /**
