@@ -26,7 +26,6 @@ const postSchema = mongoose.Schema(
         status: {
             type: String,
             default: status.DISABLE,
-            private: true,
         },
     },
     {
@@ -37,7 +36,10 @@ const postSchema = mongoose.Schema(
 postSchema.plugin(toJSON);
 postSchema.plugin(paginate);
 
-// TODO:: create slug and save slug automaticly
+/**
+ * TODO:: generate slug and save automaticly
+ * I want to create manually slug generator but I couldn't
+ */
 
 const Post = mongoose.model('tblPost', postSchema);
 

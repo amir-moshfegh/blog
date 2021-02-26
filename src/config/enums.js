@@ -5,7 +5,7 @@ status = {
 
 roles = {
     ADMIN: 'admin',
-    BLOGER: 'bloger',
+    BLOGGER: 'blogger',
     USER: 'user',
 }
 

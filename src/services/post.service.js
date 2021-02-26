@@ -9,10 +9,7 @@ const { status } = require('../config/enums');
  * @returns {Promise<Post>}
  */
 const getPostById = async (id) => {
-    return Post.findOne({
-        _id: id,
-        status: status.ENABLE,
-    });
+    return Post.findById(id);
 }
 
 /**
@@ -27,6 +24,28 @@ const updatePostById = async (postId, updateBody) => {
         throw new ApiError(httpStatus.NOT_FOUND, 'post not found.');
     }
     Object.assign(post, updateBody);
+    await post.save();
+    return post;
+}
+
+/**
+ * change status post to enable
+ * @param {ObjectId} postId 
+ * @returns {Promise<Post>}
+ */
+const changePostStatus = async (postId, statusQuery) => {
+    const post = await Post.findById(postId);
+    if (!post) {
+        throw new ApiError(httpStatus.NOT_FOUND, 'post not found');
+    }
+    console.log(statusQuery, status);
+    const statusNew = (statusQuery === status.ENABLE || statusQuery === status.DISABLE) ? statusQuery: "";
+
+    if(!statusNew){
+        throw new ApiError(httpStatus.BAD_REQUEST, 'bad request!');
+    }
+    
+    post.status = statusNew;
     await post.save();
     return post;
 }
@@ -74,4 +93,5 @@ module.exports = {
     deletePostById,
     queryPosts,
     createPost,
+    changePostStatus,
 }

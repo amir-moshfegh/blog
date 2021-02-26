@@ -15,9 +15,10 @@ const updatePost = {
         postId: Joi.required().custom(objectId),
     }),
     body: Joi.object().keys({
-        title: Joi.string().required(),
+        title: Joi.string(),
         content: Joi.string(),
         tags: Joi.array(),
+        status: Joi.string(),
     })
         .min(1),
 };
@@ -42,11 +43,21 @@ const getPosts = {
     }),
 };
 
+const changePostStatus = {
+    params: Joi.object().keys({
+        postId: Joi.string().custom(objectId),
+    }),
+    query: Joi.object().keys({
+        status: Joi.string(),
+    })
+}
+
 module.exports = {
     createPost,
     updatePost,
     deletePost,
     getPost,
     getPosts,
+    changePostStatus,
 }
 

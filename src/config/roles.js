@@ -8,7 +8,7 @@ roleRights.set(roles.ADMIN, [
   permission.GET_POSTS,
   permission.MANAGE_POSTS,
 ]);
-roleRights.set(roles.BLOGER, [
+roleRights.set(roles.BLOGGER, [
   permission.GET_POSTS,
   permission.MANAGE_POSTS,
 ]);
