@@ -13,11 +13,16 @@ permission = {
     // admin
     GET_USERS: 'getUsers',
     MANAGE_USERS: 'manageUsers',
-    CAHNGE_STATUS_POST: 'changeStatusPost',
+    CHANGE_STATUS_POST: 'changeStatusPost',
+    CHANGE_STATUS_COMMENT:'changeStatusComment',
 
     // bloger
     GET_POSTS: 'getPosts',
     MANAGE_POSTS: 'managePosts',
+
+    // user
+    MANAGE_COMMENT: 'manageComment',
+    GET_COMMENT: 'getComment',
 }
 
 module.exports = {

@@ -1,8 +1,8 @@
 const express = require('express');
-const { postValidation } = require('../../validations');
+const { postValidation, commentValidation } = require('../../validations');
 const validate = require('../../middlewares/validate');
 const auth = require('../../middlewares/auth');
-const { postController } = require('../../controllers');
+const { postController, commentController } = require('../../controllers');
 
 const router = express.Router();
 
@@ -41,7 +41,7 @@ router
 
 /**
  * enable or disable post
- * url: http://localhost:3000/v1/posts/:postId/status
+ * patch: http://localhost:3000/v1/posts/:postId/status?status=[enable/disable]
  * only admin user
  */
 router
@@ -49,5 +49,26 @@ router
     .patch(auth('changeStatusPost'), validate(postValidation.changePostStatus), postController.changePostStatus);
 
 
+//=======================================================================
+//========================== Comment Routes =============================
+//=======================================================================
+
+router
+    .route('/:postId/comment')
+    .get(auth('getComment'), validate(commentValidation.getComments), commentController.getComments);
+
+router
+    .route('/:postId/comment/add')
+    .post(auth('manageComment'), validate(commentValidation.createComment), commentController.createComment);
+
+router
+    .route('/:postId/comment/:commentId')
+    .get(auth('manageComment'), validate(commentValidation.getComment), commentController.getComment)
+    .patch(auth('manageComment'), validate(commentValidation.updateComment), commentController.updateComment)
+    .delete(auth('manageComment'), validate(commentValidation.deleteComment), commentController.deleteComment);
+
+router
+    .route('/:postId/comment/:commentId/status')
+    .get(auth('changeStatusComment'), validate(commentValidation.changeCommentStatus), commentController.changeCommentStatus);
 
 module.exports = router;

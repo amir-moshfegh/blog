@@ -38,7 +38,6 @@ const changePostStatus = async (postId, statusQuery) => {
     if (!post) {
         throw new ApiError(httpStatus.NOT_FOUND, 'post not found');
     }
-    console.log(statusQuery, status);
     const statusNew = (statusQuery === status.ENABLE || statusQuery === status.DISABLE) ? statusQuery: "";
 
     if(!statusNew){

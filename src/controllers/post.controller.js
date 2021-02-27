@@ -41,7 +41,6 @@ const getPost = catchAsync(async (req, res) => {
 const getPosts = catchAsync(async (req, res) => {
 
     let filter = {};
-
     // admin: all posts create by admin or blogger (disable or enable)
     if (req.user.role === roles.ADMIN) {
         filter = { $or: [{ 'status': status.ENABLE }, { 'status': status.DISABLE }] };
